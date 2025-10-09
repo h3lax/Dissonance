@@ -4,9 +4,9 @@
         {
             "id": 1,
             "key": "magasin",
-            "name": "Magasin (Apple Store)",
+            "name": "Magasin (Citrus Store)",
             "theme": "Change / consommation",
-            "narrative": "Tu explores un Apple Store où un coffre à 3 chiffres est verrouillé...",
+            "narrative": "Tu explores un Citrus Store où un coffre à 3 chiffres est verrouillé...",
             "goals": [
                 "Identifier les montants",
                 "Utiliser les taux fournis",
