@@ -6,12 +6,12 @@
             "key": "magasin",
             "name": "Magasin (Citrus Store)",
             "theme": "Change / consommation",
-            "narrative": "Tu explores un Citrus Store où un coffre à 3 chiffres est verrouillé...",
+            "narrative": "Tu explores un Citrus Store. Trois téléphones sont affichés à 499 €, 699 € et 899 €. Un portefeuille contient des billets en dollars, en livres et en yens. En utilisant les taux fournis dans la documentation, trouve une combinaison exacte.",
             "goals": [
-                "Identifier les montants",
-                "Utiliser les taux fournis",
-                "Ramener dans une même unité",
-                "Déduire un code à 3 chiffres"
+                "Identifier les montants des téléphones dans la salle",
+                "Comprendre que les billets sont dans des devises différentes",
+                "Utiliser les taux fournis dans la documentation pour tout ramener en euros",
+                "Trouver une combinaison exacte pour un des trois téléphone car une seule combinaison est possible €"
             ],
             "puzzles": [
                 {
@@ -19,45 +19,214 @@
                     "type": "DOC",
                     "title": "Portefeuille & taux de change",
                     "facts": {
-                        "wallet": {
-                            "USD": 20,
-                            "GBP": 200,
-                            "JPY": 200000
+                        "phone_prices_eur": [
+                            499,
+                            699,
+                            899
+                        ],
+                        "available_bills": {
+                            "USD": {
+                                "denomination": 100,
+                                "count": 10
+                            },
+                            "GBP": {
+                                "denomination": 50,
+                                "count": 10
+                            },
+                            "JPY": [
+                                {
+                                    "denomination": 1000,
+                                    "count": 5
+                                },
+                                {
+                                    "denomination": 500,
+                                    "count": 2
+                                }
+                            ]
                         },
                         "rates_to_eur": {
-                            "GBP": 1.15,
-                            "USD": 0.85,
-                            "JPY": 0.00015
+                            "USD": 0.91,
+                            "GBP": 0.92,
+                            "JPY_per_100": 1
                         },
-                        "target_sum_eur": 277
+                        "notes": "100 ¥ = 1 €, donc 1000 ¥ = 10 € et 500 ¥ = 5 €.",
+                        "target_sum_eur": 899
                     },
                     "hint_tiers": [
-                        "Repère ce que symbolisent les papiers et objets trouvés. Cherche un moyen de les comparer dans une même référence.",
-                        "Utilise les informations disponibles pour ramener chaque valeur dans une unité commune, puis combine-les pour obtenir une quantité unique.",
-                        "Si tu as déjà la bonne méthode, applique-la à chaque valeur trouvée et agrège le résultat ; tu obtiendras un nombre à trois chiffres."
-                    ]
+                        "Observe que les billets ne sont pas en euros. Ramène toutes les valeurs dans la même unité avant d’additionner."
+                                            ]
                 }
             ]
         },
         {
             "id": 2,
+            "key": "bureau",
             "name": "Bureau",
+            "theme": "Santé au travail / charge mentale",
+            "narrative": "Un pilulier hebdomadaire est renversé et mélangé. L’ordonnance du médecin est dans la documentation. Reconstitue les prises pour toute la semaine.",
             "goals": [
-                "Pilulier selon ordonnance"
+                "Identifier la structure du pilulier (jours × moments)",
+                "Croiser l'ordonnance avec le pilulier",
+                "Reconstituer les prises exactes",
+                "Valider l’ordre correct pour passer"
+            ],
+            "puzzles": [
+                {
+                    "id": "p2-pilulier-ordonnance",
+                    "type": "DOC",
+                    "title": "Pilulier & Ordonnance",
+                    "facts": {
+                        "pillbox": {
+                            "days": [
+                                "Lundi",
+                                "Mardi",
+                                "Mercredi",
+                                "Jeudi",
+                                "Vendredi",
+                                "Samedi",
+                                "Dimanche"
+                            ],
+                            "slots": [
+                                "Matin",
+                                "Midi",
+                                "Soir"
+                            ]
+                        },
+                        "prescription": [
+                            {
+                                "name": "A",
+                                "dosage": "1 gélule",
+                                "times": [
+                                    "Matin"
+                                ]
+                            },
+                            {
+                                "name": "B",
+                                "dosage": "1 comprimé",
+                                "times": [
+                                    "Midi"
+                                ]
+                            },
+                            {
+                                "name": "C",
+                                "dosage": "1 comprimé",
+                                "times": [
+                                    "Soir"
+                                ]
+                            }
+                        ],
+                        "constraints": [
+                            "A n’est jamais pris le soir",
+                            "B évite le matin (pas à jeun)",
+                            "C ne partage pas le même créneau qu’A"
+                        ]
+                    },
+                    "hint_tiers": [
+                        "Repère la grille du pilulier (jours × moments) et fais-la correspondre aux indications de l’ordonnance.",
+                        "Assigne A au matin, B au midi, C au soir, en respectant les contraintes notées.",
+                        "Vérifie que chaque jour suit la même logique et corrige les placements ambigus."
+                    ]
+                }
             ]
         },
         {
             "id": 3,
+            "key": "usine",
             "name": "Usine",
+            "theme": "Cadences / synchronisation",
+            "narrative": "Deux horloges industrielles sont déréglées. Un graffiti montre un personnage portant deux montres : l’une a toujours de l’avance, l’autre du retard. Associe chaque montre à la bonne horloge et corrige l’heure.",
             "goals": [
-                "Tuyaux / timecard"
+                "Identifier les décalages représentés par les montres",
+                "Relier chaque montre à la bonne horloge",
+                "Appliquer les corrections (avance/retard)",
+                "Synchroniser précisément les deux horloges"
+            ],
+            "puzzles": [
+                {
+                    "id": "p3-horloges-graffiti",
+                    "type": "DECOR",
+                    "title": "Double horloge & double montre",
+                    "facts": {
+                        "clocks": [
+                            {
+                                "id": "clock_A",
+                                "label": "Horloge A",
+                                "current": "11:20"
+                            },
+                            {
+                                "id": "clock_B",
+                                "label": "Horloge B",
+                                "current": "14:05"
+                            }
+                        ],
+                        "watches_graffiti": [
+                            {
+                                "id": "watch_left",
+                                "hint": "Toujours +15 minutes"
+                            },
+                            {
+                                "id": "watch_right",
+                                "hint": "Toujours -10 minutes"
+                            }
+                        ],
+                        "target_reference": "Heure officielle de l’atelier"
+                    },
+                    "hint_tiers": [
+                        "Le graffiti n’est pas décoratif : il décrit des décalages réguliers (avance/retard).",
+                        "Déduis quelle horloge correspond à quelle montre en comparant avec l’heure de référence.",
+                        "Corrige chaque horloge selon le décalage indiqué jusqu’à tomber sur l’heure officielle."
+                    ]
+                }
             ]
         },
         {
             "id": 4,
+            "key": "mine",
             "name": "Mine",
+            "theme": "Extraction / ressources / héritage",
+            "narrative": "Une bombe artisanale est reliée à plusieurs fils colorés. Une tablette cunéiforme sous les décombres contient des indices. Utilise la documentation pour interpréter les symboles et neutraliser l’engin.",
             "goals": [
-                "Ordre des minerais"
+                "Repérer les fils et leur codage",
+                "Lire la tablette pour comprendre l’ordre/association",
+                "Appliquer la séquence de sécurité",
+                "Désamorcer proprement l’engin"
+            ],
+            "puzzles": [
+                {
+                    "id": "p4-bombe-tablette",
+                    "type": "DOC",
+                    "title": "Bombe & tablette ancienne",
+                    "facts": {
+                        "wires": [
+                            {
+                                "color": "rouge",
+                                "label": "fer"
+                            },
+                            {
+                                "color": "bleu",
+                                "label": "eau"
+                            },
+                            {
+                                "color": "vert",
+                                "label": "végétal"
+                            },
+                            {
+                                "color": "jaune",
+                                "label": "soleil"
+                            }
+                        ],
+                        "tablet_clues": [
+                            "L’ordre des éléments est encodé par des symboles",
+                            "Le signe ‘soleil’ n’est jamais le premier",
+                            "Le ‘fer’ ne vient pas juste après ‘eau’"
+                        ]
+                    },
+                    "hint_tiers": [
+                        "Associe chaque symbole de la tablette à un fil (élément ↔ couleur).",
+                        "Applique les contraintes (positions interdites, exclusions) pour déduire l’ordre.",
+                        "Exécute la séquence calmement, fil par fil, dans l’ordre déterminé."
+                    ]
+                }
             ]
         }
     ]
