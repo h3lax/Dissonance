@@ -12,6 +12,12 @@
         ]
     },
     "include": [
-        "server/**/*.ts"
+        "server/socket.ts"
+    ],
+    "exclude": [
+        "server/api",
+        ".nuxt",
+        "node_modules",
+        "dist"
     ]
 }
