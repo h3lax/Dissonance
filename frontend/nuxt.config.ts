@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     experimental:{
       websocket:true
     },
-    preset: 'vercel'
+    preset: 'node-server',
   },
 
   vite: {
