@@ -24,4 +24,10 @@ export default defineNuxtConfig({
       hintCooldownSec: 15 * 60, // 15 minutes entre deux requêtes
     },
   },
+
+  app: {
+    head: {
+      title: 'Dissonance'
+    },
+  },
 });

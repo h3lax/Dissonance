@@ -37,5 +37,10 @@ export function useSocket() {
     socket.value?.on('chat-history', callback)
   }
 
-  return { connect, joinLobby, sendMessage, onMessage, onHistory }
+  const onLobbyTimer = (callback: (data: any) => void) => {
+    socket.value?.off('lobby-timer')
+    socket.value?.on('lobby-timer', callback)
+  }
+
+  return { connect, joinLobby, sendMessage, onMessage, onHistory, onLobbyTimer }
 }

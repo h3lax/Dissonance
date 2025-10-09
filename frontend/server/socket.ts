@@ -8,8 +8,12 @@ interface Message {
 interface Lobby {
   id: string
   messages: Message[]
+  startTime: number
+  duration: number // ms
   timeout?: NodeJS.Timeout
 }
+
+const LOBBY_DURATION = 62 * 60 * 1000
 
 const lobbies = new Map<string, Lobby>()
 
@@ -19,11 +23,18 @@ const io = new Server({
 
 const getOrCreateLobby = (id: string): Lobby => {
   if (!lobbies.has(id)) {
-    const lobby: Lobby = { id, messages: [] }
+    const lobby: Lobby = {
+      id,
+      messages: [],
+      startTime: Date.now(),
+      duration: LOBBY_DURATION,
+    }
+
     lobby.timeout = setTimeout(() => {
       console.log(`⌛ Lobby ${id} expired`)
       lobbies.delete(id)
-    }, 62 * 60 * 1000)
+    }, LOBBY_DURATION)
+
     lobbies.set(id, lobby)
     console.log(`🆕 Created lobby ${id}`)
   }
@@ -38,9 +49,13 @@ io.on('connection', (socket) => {
     const lobby = getOrCreateLobby(lobbyId)
 
     socket.join(lobbyId)
-    console.log(`🧩 ${socket.id} joined lobby ${lobbyId}`)
 
-    socket.emit("chat-history", lobby.messages)
+    socket.emit('chat-history', lobby.messages)
+    socket.emit('lobby-timer', {
+      startTime: lobby.startTime,
+      duration: lobby.duration,
+      now: Date.now(),
+    })
   })
 
   socket.on('send-message', ({ player, message }) => {

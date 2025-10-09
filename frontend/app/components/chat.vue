@@ -25,9 +25,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useSocket } from '~/composables/useSocket'
+import { useLobbyTimer } from '~/composables/useLobbyTimer'
 import { useStorage } from '@vueuse/core'
 
-const { connect, joinLobby, sendMessage, onMessage, onHistory } = useSocket()
+const { connect, joinLobby, sendMessage, onMessage, onHistory, onLobbyTimer } = useSocket()
+const { remaining, startCountdown } = useLobbyTimer()
 
 const lobby = useStorage('lobby', '')
 const input = ref('')
@@ -46,6 +48,10 @@ onMounted(() => {
   // Listen for new messages
   onMessage((data) => {
     messages.value.push(data)
+  })
+
+  onLobbyTimer(({ startTime, duration, now }) => {
+    startCountdown(startTime, duration, now)
   })
 })
 
