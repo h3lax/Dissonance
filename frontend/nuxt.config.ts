@@ -18,10 +18,11 @@ export default defineNuxtConfig({
   css: ["~/assets/app.css"],
 
   runtimeConfig: {
-    openaiApiKey: process.env.OPENAI_API_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 
     public: {
-      hintCooldownSec: 15 * 60, // 15 minutes entre deux requêtes
+      NUXT_PUBLIC_WS_URL: process.env.NUXT_PUBLIC_WS_URL, // ex: https://dissonance-ws.onrender.com
+      hintCooldownSec: 15 * 60,
     },
   },
 
