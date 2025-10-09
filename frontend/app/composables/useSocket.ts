@@ -7,7 +7,7 @@ export function useSocket() {
   const connect = () => {
     if (socket.value && socket.value.connected) return // Avoid reconnects
 
-    socket.value = io('http://localhost:3001', { transports: ['websocket'] })
+    socket.value = io(process.env.WS_URL || 'http://localhost:3001', { transports: ['websocket'] })
 
     socket.value.on('connect', () => {
       console.log('✅ Connected to Socket.IO as', socket.value?.id)
