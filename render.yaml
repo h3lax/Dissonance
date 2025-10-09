@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: dissonance-nuxt
+    rootDir: frontend
+    env: docker
+    dockerfilePath: ./Dockerfile.nuxt
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: NUXT_PUBLIC_WS_URL
+        value: https://dissonance-ws.onrender.com
+      - key: OPENAI_API_KEY
+        sync: false
+
+  - type: web
+    name: dissonance-ws
+    rootDir: frontend
+    env: docker
+    dockerfilePath: ./Dockerfile.ws
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: CORS_ORIGIN
+        value: https://dissonance-nuxt.onrender.com

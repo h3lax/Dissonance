@@ -1,4 +1,5 @@
 import { Server } from 'socket.io'
+import { createServer } from 'http'
 
 interface Message {
   sender: string
@@ -15,10 +16,20 @@ interface Lobby {
 
 const LOBBY_DURATION = 62 * 60 * 1000
 
+// --- Config via variables d'env (avec valeurs par défaut pour le local)
+const PORT = Number(process.env.PORT ?? 3001);
+const HOST = process.env.HOST ?? "0.0.0.0";
+const CORS_ORIGIN =
+  process.env.CORS_ORIGIN?.split(",").map((s) => s.trim()) ?? "*"; // ex: "https://mon-front.com,https://autre.com"
+
 const lobbies = new Map<string, Lobby>()
 
-const io = new Server({
-  cors: { origin: '*' },
+// On crée un serveur HTTP pour pouvoir préciser l'hôte et le port (utile en Docker/Render)
+const httpServer = createServer()
+
+
+const io = new Server(httpServer, {
+  cors: { origin: CORS_ORIGIN },
 })
 
 const getOrCreateLobby = (id: string): Lobby => {
@@ -78,5 +89,7 @@ io.on('connection', (socket) => {
   })
 })
 
-io.listen(3001)
-console.log('🚀 Socket.IO server running on port 3001')
+httpServer.listen(PORT, HOST, () => {
+  console.log(`🚀 Socket.IO server running on http://${HOST}:${PORT}`)
+})
+
