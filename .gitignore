@@ -26,4 +26,4 @@ logs
 # netlify local
 .netlify
 
-frontend/public/game/*
+# frontend/public/game/*
