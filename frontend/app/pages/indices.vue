@@ -1,10 +1,18 @@
 <template>
-    <Navbar />
+  <div>
     <NuxtRouteAnnouncer />
-    <Drawer />
-  <div class="p-6 max-w-3xl mx-auto">
-    
-    <h1 class="text-2xl font-bold mt-6 mb-4">Assistant — Indices</h1>
-    <HintPanel />
+      <Navbar />
+      <Drawer />
+      <embed
+        class="game-dim m-auto border border-base-300 rounded-md"
+        src="/ressources/Merged.pdf" 
+        allowfullscreen
+        type="application/pdf">
   </div>
 </template>
+<style>
+  .game-dim{
+    height: 800px;
+    width: 1200px;
+  }
+</style>
